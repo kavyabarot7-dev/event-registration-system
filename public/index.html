@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>College Event Registration</h2>
+<button onclick="goToAdmin()" style="margin-bottom:15px;">
+    📊 Go to Admin Dashboard
+</button>
+    <form id="form">
+            <input type="text" id="name" placeholder="Full Name" required>
+
+<input type="text" id="enrollmentNumber" placeholder="Enrollment Number" required>
+
+<input type="text" id="branch" placeholder="Branch" required>
+
+<input type="text" id="contactNumber" placeholder="Contact Number" required>
+
+<input type="email" id="email" placeholder="Email ID" required>
+
+<select id="event">
+    <option>Tech Fest</option>
+    <option>Workshop</option>
+    <option>Hackathon</option>
+</select>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p id="message"></p>
+</div>
+
+
+<script>
+document.getElementById("form").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        enrollmentNumber: document.getElementById("enrollmentNumber").value,
+        branch: document.getElementById("branch").value,
+        contactNumber: document.getElementById("contactNumber").value,
+        email: document.getElementById("email").value,
+        event: document.getElementById("event").value
+    };
+
+    const res = await fetch("/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    const msg = await res.text();
+    document.getElementById("message").innerText = msg;
+});
+</script>
+<script>
+function goToAdmin() {
+    window.location.href = "admin.html";
+}
+</script>
+</body>
+</html>
